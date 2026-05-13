@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sampriti - তোমার জন্য চিরকাল 💕</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
+        }
+        .love-text {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff0f5;
+            z-index: 20;
+            background: linear-gradient(90deg, transparent, rgba(255,80,120,0.7), transparent);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            width: fit-content;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 1px solid rgba(255,120,160,0.6);
+            pointer-events: none;
+            text-shadow: 0 0 8px #ff3366;
+            font-family: 'Poppins', sans-serif;
+        }
+        .name-banner {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff99cc, #ff66aa, #ff3399);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255,51,153,0.6);
+            z-index: 20;
+            pointer-events: none;
+            letter-spacing: 3px;
+        }
+        .instruction {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255,255,255,0.7);
+            background: rgba(0,0,0,0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            z-index: 20;
+        }
+        @media (max-width: 600px) {
+            .love-text { font-size: 0.8rem; bottom: 15px; }
+            .name-banner { font-size: 1.5rem; top: 12px; }
+            .instruction { font-size: 0.55rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="name-banner">✨ Sampriti ✨</div>
+    <div class="love-text">💖 তুমি আমার হৃদয়ের সবচেয়ে সুন্দর অনুভূতি — চিরদিন তোমার জন্য 💖</div>
+    <div class="instruction">🖱️ Mouse ঘুরিয়ে দেখো | 🔍 জুম করো | 💕 হৃদয়ের স্পন্দন</div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        // --- setup scene, camera, renderers ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050212);
+        scene.fog = new THREE.FogExp2(0x050212, 0.01);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(4, 2.5, 7);
+        camera.lookAt(0, 0.7, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        document.body.appendChild(renderer.domElement);
+
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.left = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.body.appendChild(labelRenderer.domElement);
+
+        // --- post processing bloom ---
+        const renderScene = new RenderPass(scene, camera);
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.1, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 0.8;
+        bloomPass.radius = 0.5;
+        const effectComposer = new EffectComposer(renderer);
+        effectComposer.addPass(renderScene);
+        effectComposer.addPass(bloomPass);
+
+        // --- controls with auto-rotate ---
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.enableZoom = true;
+        controls.enablePan = false;
+        controls.zoomSpeed = 1.0;
+        controls.target.set(0, 0.7, 0);
+
+        // --- romantic lighting ---
+        const ambientLight = new THREE.AmbientLight(0x331133, 0.6);
+        scene.add(ambientLight);
+        
+        const mainLight = new THREE.DirectionalLight(0xffaacc, 1.2);
+        mainLight.position.set(2, 3, 2);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.width = 1024;
+        mainLight.shadow.mapSize.height = 1024;
+        scene.add(mainLight);
+        
+        const backLight = new THREE.PointLight(0xff44aa, 0.8);
+        backLight.position.set(-1.5, 1.8, -3);
+        scene.add(backLight);
+        
+        const warmFill = new THREE.PointLight(0xffaa77, 0.7);
+        warmFill.position.set(2, 1.2, 2.5);
+        scene.add(warmFill);
+        
+        const pinkFill = new THREE.PointLight(0xff66cc, 0.6);
+        pinkFill.position.set(-1, 1.5, 2);
+        scene.add(pinkFill);
+        
+        const groundGlow = new THREE.PointLight(0xff3399, 0.5);
+        groundGlow.position.set(0, -0.5, 0);
+        scene.add(groundGlow);
+        
+        const colorLight = new THREE.PointLight(0xff44aa, 0.7);
+        colorLight.position.set(1.2, 1.2, 1.5);
+        scene.add(colorLight);
+
+        // --- main heart particle system (perfect heart shape) ---
+        const scaleFactor = 0.045;
+        const heartCount = 4000;
+        const heartPositions = new Float32Array(heartCount * 3);
+        const heartColors = new Float32Array(heartCount * 3);
+        
+        for (let i = 0; i < heartCount; i++) {
+            const t = Math.random() * Math.PI * 2;
+            const xRaw = 16 * Math.pow(Math.sin(t), 3);
+            const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+            const zOffset = (Math.random() - 0.5) * 1.0;
+            heartPositions[i*3] = xRaw * scaleFactor;
+            heartPositions[i*3+1] = yRaw * scaleFactor + 0.65;
+            heartPositions[i*3+2] = zOffset * 0.45;
+            
+            const r = 0.85 + Math.random() * 0.4;
+            const g = 0.2 + Math.random() * 0.5;
+            const b = 0.4 + Math.random() * 0.6;
+            heartColors[i*3] = r;
+            heartColors[i*3+1] = g;
+            heartColors[i*3+2] = b;
+        }
+        const heartGeometry = new THREE.BufferGeometry();
+        heartGeometry.setAttribute('position', new THREE.BufferAttribute(heartPositions, 3));
+        heartGeometry.setAttribute('color', new THREE.BufferAttribute(heartColors, 3));
+        const heartParticleMat = new THREE.PointsMaterial({ size: 0.05, vertexColors: true, blending: THREE.AdditiveBlending });
+        const heartParticles = new THREE.Points(heartGeometry, heartParticleMat);
+        scene.add(heartParticles);
+
+        // --- floating magical particles ---
+        const floatCount = 2000;
+        const floatGeo = new THREE.BufferGeometry();
+        const floatPositions = new Float32Array(floatCount * 3);
+        const floatColors = new Float32Array(floatCount * 3);
+        for (let i = 0; i < floatCount; i++) {
+            const radius = 2.0 + Math.random() * 3.0;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            floatPositions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
+            floatPositions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta) * 0.7 + 0.7;
+            floatPositions[i*3+2] = radius * Math.cos(phi);
+            
+            if (Math.random() < 0.6) {
+                floatColors[i*3] = 1.0;
+                floatColors[i*3+1] = 0.5 + Math.random()*0.4;
+                floatColors[i*3+2] = 0.7 + Math.random()*0.3;
+            } else {
+                floatColors[i*3] = 0.9 + Math.random()*0.3;
+                floatColors[i*3+1] = 0.6 + Math.random()*0.4;
+                floatColors[i*3+2] = 0.9 + Math.random()*0.3;
+            }
+        }
+        floatGeo.setAttribute('position', new THREE.BufferAttribute(floatPositions, 3));
+        floatGeo.setAttribute('color', new THREE.BufferAttribute(floatColors, 3));
+        const floatParticles = new THREE.Points(floatGeo, new THREE.PointsMaterial({ size: 0.04, vertexColors: true, blending: THREE.AdditiveBlending }));
+        scene.add(floatParticles);
+
+        // --- star field background ---
+        const starCount = 1500;
+        const starFieldGeo = new THREE.BufferGeometry();
+        const starPosArray = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount; i++) {
+            starPosArray[i*3] = (Math.random() - 0.5) * 200;
+            starPosArray[i*3+1] = (Math.random() - 0.5) * 100;
+            starPosArray[i*3+2] = (Math.random() - 0.5) * 80 - 40;
+        }
+        starFieldGeo.setAttribute('position', new THREE.BufferAttribute(starPosArray, 3));
+        const starMat = new THREE.PointsMaterial({ color: 0xffaacc, size: 0.08, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+        const stars = new THREE.Points(starFieldGeo, starMat);
+        scene.add(stars);
+
+        // --- decorative rings ---
+        const ring1 = new THREE.Mesh(
+            new THREE.TorusGeometry(1.35, 0.045, 128, 300),
+            new THREE.MeshStandardMaterial({ color: 0xff66aa, emissive: 0x551133, emissiveIntensity: 0.6, metalness: 0.7, roughness: 0.3 })
+        );
+        ring1.position.y = 0.7;
+        ring1.rotation.x = Math.PI / 2;
+        scene.add(ring1);
+        
+        const ring2 = new THREE.Mesh(
+            new THREE.TorusGeometry(1.65, 0.04, 128, 300),
+            new THREE.MeshStandardMaterial({ color: 0xff88cc, emissive: 0x331122, emissiveIntensity: 0.5 })
+        );
+        ring2.position.y = 0.7;
+        ring2.rotation.z = Math.PI / 3;
+        ring2.rotation.x = Math.PI / 2.2;
+        scene.add(ring2);
+        
+        const ring3 = new THREE.Mesh(
+            new THREE.TorusGeometry(0.95, 0.035, 100, 200),
+            new THREE.MeshStandardMaterial({ color: 0xffaa88, emissive: 0x442211, emissiveIntensity: 0.4 })
+        );
+        ring3.position.y = 0.7;
+        ring3.rotation.x = Math.PI / 1.8;
+        scene.add(ring3);
+
+        // --- core crystal gem ---
+        const coreGem = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(0.28, 0),
+            new THREE.MeshStandardMaterial({ color: 0xff4499, emissive: 0xff1188, emissiveIntensity: 0.8, roughness: 0.2, metalness: 0.9 })
+        );
+        coreGem.position.y = 0.68;
+        scene.add(coreGem);
+
+        // --- floating heart sprites (canvas texture) ---
+        function createHeartSprite() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 48;
+            canvas.height = 48;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 48, 48);
+            ctx.fillStyle = '#ff5588';
+            ctx.beginPath();
+            const x = 24, y = 24, size = 18;
+            ctx.moveTo(x, y + size/3);
+            ctx.bezierCurveTo(x, y - size/2.2, x - size, y - size/2.2, x - size, y + size/3);
+            ctx.bezierCurveTo(x - size, y + size*0.9, x, y + size*0.8, x, y + size);
+            ctx.bezierCurveTo(x, y + size*0.8, x + size, y + size*0.9, x + size, y + size/3);
+            ctx.bezierCurveTo(x + size, y - size/2.2, x, y - size/2.2, x, y + size/3);
+            ctx.fill();
+            ctx.fillStyle = '#ff99bb';
+            ctx.beginPath();
+            ctx.arc(x-6, y-3, 3, 0, Math.PI*2);
+            ctx.fill();
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.SpriteMaterial({ map: texture, blending: THREE.AdditiveBlending });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(0.28, 0.28, 1);
+            return sprite;
+        }
+        
+        const heartSprites = [];
+        const spriteCount = 30;
+        for (let i = 0; i < spriteCount; i++) {
+            const sprite = createHeartSprite();
+            scene.add(sprite);
+            const angle = (i / spriteCount) * Math.PI * 2;
+            const radius = 2.0 + Math.random() * 0.9;
+            const yOff = -0.2 + Math.random() * 1.3;
+            sprite.userData = {
+                angle: angle,
+                radius: radius,
+                speed: 0.005 + Math.random() * 0.008,
+                yOffset: yOff,
+                ySpeed: 0.002 + Math.random() * 0.006
+            };
+            sprite.position.x = Math.cos(angle) * radius;
+            sprite.position.z = Math.sin(angle) * radius;
+            sprite.position.y = yOff + 0.7;
+            heartSprites.push(sprite);
+        }
+
+        // --- CSS2D romantic text labels ---
+        function makeLabel(text, color, pos, fontSize = '1rem', bgAlpha = 0.55) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.style.color = color;
+            div.style.fontSize = fontSize;
+            div.style.fontWeight = 'bold';
+            div.style.fontFamily = "'Poppins', cursive";
+            div.style.textShadow = '0 0 6px #ff3366';
+            div.style.background = `rgba(20, 5, 35, ${bgAlpha})`;
+            div.style.padding = '6px 18px';
+            div.style.borderRadius = '40px';
+            div.style.border = `1px solid ${color}`;
+            div.style.backdropFilter = 'blur(10px)';
+            div.style.whiteSpace = 'nowrap';
+            const label = new CSS2DObject(div);
+            label.position.copy(pos);
+            scene.add(label);
+            return label;
+        }
+        
+        const nameLabel = makeLabel('❤️ Sampriti ❤️', '#ff99cc', new THREE.Vector3(0, 2.15, 0), '2rem', 0.65);
+        const loveSub = makeLabel('My Eternal Love', '#ffaacc', new THREE.Vector3(0, 2.85, 0), '1rem', 0.5);
+        const msgLeft = makeLabel('তোমার হাসি জোছনা', '#ffbb99', new THREE.Vector3(-2.3, 1.3, 1.8), '0.85rem', 0.45);
+        const msgRight = makeLabel('তোমার নাম প্রেমের মন্ত্র', '#ffbb99', new THREE.Vector3(2.4, 1.1, -1.8), '0.85rem', 0.45);
+        const msgBack = makeLabel('∞ চিরকাল তোমার ∞', '#ff88aa', new THREE.Vector3(0, -0.1, -2.6), '0.9rem', 0.4);
+        const msgTop = makeLabel('✨ খুশির তারা ✨', '#ffcc99', new THREE.Vector3(1.5, 2.4, -1.3), '0.8rem', 0.4);
+
+        // --- reflective ground platform ---
+        const platformGeo = new THREE.CircleGeometry(3.8, 32);
+        const platformMat = new THREE.MeshStandardMaterial({ color: 0x221133, roughness: 0.4, metalness: 0.5, transparent: true, opacity: 0.35, side: THREE.DoubleSide });
+        const platform = new THREE.Mesh(platformGeo, platformMat);
+        platform.rotation.x = -Math.PI / 2;
+        platform.position.y = -0.35;
+        platform.receiveShadow = true;
+        scene.add(platform);
+        
+        const glowRingPlatform = new THREE.Mesh(
+            new THREE.RingGeometry(2.4, 3.7, 64),
+            new THREE.MeshStandardMaterial({ color: 0xff66aa, emissive: 0x441133, emissiveIntensity: 0.4, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
+        );
+        glowRingPlatform.rotation.x = -Math.PI / 2;
+        glowRingPlatform.position.y = -0.32;
+        scene.add(glowRingPlatform);
+
+        // --- floating rose symbol ---
+        const roseOrb = new THREE.Mesh(
+            new THREE.SphereGeometry(0.18, 16, 16),
+            new THREE.MeshStandardMaterial({ color: 0xff3366, emissive: 0xff2266, emissiveIntensity: 0.7 })
+        );
+        scene.add(roseOrb);
+
+        // --- animation variables ---
+        let clock = 0;
+
+        // --- animation loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            clock += 0.012;
+            
+            // heart particle rotation & gentle motion
+            heartParticles.rotation.y = clock * 0.1;
+            heartParticles.rotation.x = Math.sin(clock * 0.2) * 0.1;
+            heartParticles.rotation.z = Math.cos(clock * 0.15) * 0.05;
+            
+            floatParticles.rotation.y = clock * 0.06;
+            floatParticles.rotation.x = Math.sin(clock * 0.12) * 0.08;
+            
+            // rings rotation
+            ring1.rotation.z = clock * 0.35;
+            ring2.rotation.y = clock * 0.4;
+            ring2.rotation.x = Math.PI / 2.2 + Math.sin(clock * 0.5) * 0.1;
+            ring3.rotation.x = clock * 0.5;
+            ring3.rotation.z = clock * 0.3;
+            
+            // floating heart sprites
+            heartSprites.forEach(sprite => {
+                const data = sprite.userData;
+                if (data) {
+                    data.angle += data.speed;
+                    sprite.position.x = Math.cos(data.angle) * data.radius;
+                    sprite.position.z = Math.sin(data.angle) * data.radius;
+                    const yMove = Math.sin(clock * data.ySpeed * 9) * 0.08;
+                    sprite.position.y = data.yOffset + 0.7 + yMove;
+                    const scaleVar = 0.28 + Math.sin(clock * 7) * 0.03;
+                    sprite.scale.set(scaleVar, scaleVar, 1);
+                }
+            });
+            
+            // color light dance
+            colorLight.intensity = 0.65 + Math.sin(clock * 1.6) * 0.3;
+            colorLight.position.x = 1.3 + Math.sin(clock * 1.2) * 0.6;
+            colorLight.position.z = 1.2 + Math.cos(clock * 0.9) * 0.7;
+            colorLight.color.setHSL(0.6 + Math.sin(clock * 0.8) * 0.1, 1, 0.65);
+            
+            backLight.intensity = 0.7 + Math.sin(clock * 1.4) * 0.25;
+            warmFill.intensity = 0.6 + Math.sin(clock * 1.1) * 0.2;
+            pinkFill.intensity = 0.55 + Math.sin(clock * 1.7) * 0.2;
+            groundGlow.intensity = 0.45 + Math.sin(clock * 1.2) * 0.2;
+            
+            // core gem and rose
+            coreGem.rotation.x = clock * 0.6;
+            coreGem.rotation.y = clock * 0.8;
+            roseOrb.position.x = Math.sin(clock * 1.4) * 1.4;
+            roseOrb.position.z = Math.cos(clock * 1.2) * 1.4;
+            roseOrb.position.y = 0.75 + Math.sin(clock * 2.3) * 0.12;
+            
+            // text label levitation
+            nameLabel.position.y = 2.15 + Math.sin(clock * 1.3) * 0.05;
+            loveSub.position.y = 2.85 + Math.sin(clock * 1.1) * 0.04;
+            
+            // star field drift
+            stars.rotation.y = clock * 0.008;
+            stars.rotation.x = Math.sin(clock * 0.04) * 0.02;
+            
+            // update controls
+            controls.update();
+            
+            // render via effect composer and css2d
+            effectComposer.render();
+            labelRenderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // --- resize handler ---
+        window.addEventListener('resize', onWindowResize);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHe
