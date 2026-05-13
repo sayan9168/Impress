@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Sampriti 💕 চিরকালের ভালোবাসা | 3D লাভ ওয়ার্ল্ড</title>
-    <!-- Canvas Confetti লাইব্রেরি -->
+    <title>Sampriti 💖 চিরকালের ভালোবাসা | 3D লাভ ওয়ার্ল্ড + ইমেইল রিপোর্ট</title>
+    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <style>
         * {
@@ -12,50 +12,42 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             overflow: hidden;
             font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
         }
-
-        /* 3D ক্যানভাস */
         canvas {
             display: block;
         }
-
-        /* মূল UI প্যানেল - গ্লাসমরফিজম + এনিমেশন */
+        /* Main UI Panel */
         .ui-panel {
             position: absolute;
             bottom: 20px;
             left: 20px;
             right: 20px;
-            max-width: 480px;
-            background: rgba(10, 5, 25, 0.75);
-            backdrop-filter: blur(16px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 120, 180, 0.6);
+            max-width: 520px;
+            background: rgba(10, 5, 25, 0.8);
+            backdrop-filter: blur(18px);
+            border-radius: 44px;
+            border: 1px solid rgba(255, 120, 180, 0.7);
             padding: 18px 22px;
             color: white;
             z-index: 30;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.5);
             pointer-events: auto;
             overflow-y: auto;
-            max-height: 85vh;
+            max-height: 82vh;
+            scrollbar-width: thin;
         }
-
         @media (min-width: 768px) {
             .ui-panel {
-                left: 30px;
+                left: 25px;
                 right: auto;
-                width: 440px;
-                bottom: 30px;
-                max-height: 80vh;
+                width: 480px;
+                bottom: 25px;
             }
         }
-
-        /* স্ক্রলবার সুন্দর */
         .ui-panel::-webkit-scrollbar {
             width: 5px;
         }
@@ -67,57 +59,53 @@
             background: #ff88aa;
             border-radius: 10px;
         }
-
         .greeting {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border-bottom: 1px dashed #ff88aa;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
         .greeting h2 {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             background: linear-gradient(135deg, #ff99cc, #ff66aa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         .greeting p {
             font-size: 0.9rem;
             color: #ffddcc;
-            margin-top: 6px;
         }
-
         .love-meter {
             background: rgba(0,0,0,0.5);
             border-radius: 30px;
             padding: 8px 12px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             text-align: center;
         }
         .meter-bar {
             background: #ff3366;
-            height: 10px;
-            border-radius: 10px;
+            height: 12px;
+            border-radius: 12px;
             width: 0%;
             transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            margin-top: 6px;
+            margin-top: 8px;
         }
         .meter-text {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
         }
-
         .poll-card {
             background: rgba(255,255,255,0.08);
             border-radius: 28px;
-            padding: 14px 16px;
-            margin-bottom: 18px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
             border-left: 4px solid #ff6699;
             transition: transform 0.2s;
         }
         .poll-card:hover {
-            transform: translateX(6px);
+            transform: translateX(5px);
             background: rgba(255,255,255,0.12);
         }
         .poll-question {
@@ -127,19 +115,20 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
         .options {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
         .opt-btn {
             background: rgba(255,200,220,0.2);
             border: 1px solid #ff88aa;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 60px;
             color: #fff0f5;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -150,349 +139,372 @@
         }
         .opt-btn:hover {
             background: #ff6699;
-            transform: scale(1.03);
-            box-shadow: 0 0 12px #ff66aa;
+            transform: scale(1.02);
+            box-shadow: 0 0 10px #ff66aa;
         }
         .answered-feedback {
             font-size: 0.75rem;
             margin-top: 10px;
             color: #ffccbb;
+        }
+        .fun-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .fun-btn {
+            flex: 1;
+            background: rgba(255,100,150,0.3);
+            border: 1px solid #ff99bb;
+            padding: 8px 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 8px;
         }
-
+        .fun-btn:hover {
+            background: #ff6699;
+            transform: scale(1.02);
+        }
         .surprise-btn {
             width: 100%;
             background: linear-gradient(45deg, #ff4499, #ff66cc);
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 60px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: white;
-            margin-top: 12px;
+            margin-top: 8px;
             margin-bottom: 8px;
             cursor: pointer;
             transition: 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            box-shadow: 0 5px 15px rgba(255,51,153,0.4);
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255,51,153,0.5);
         }
         .surprise-btn:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
+            transform: scale(1.01);
+            filter: brightness(1.05);
         }
-
         .floating-emoji {
             position: absolute;
             pointer-events: none;
-            font-size: 1.8rem;
+            font-size: 2rem;
             animation: floatUp 2s ease-out forwards;
             z-index: 200;
+            font-weight: bold;
         }
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-120px) scale(1.2); opacity: 0; }
+            0% { transform: translateY(0) scale(0.6); opacity: 1; }
+            100% { transform: translateY(-130px) scale(1.3); opacity: 0; }
         }
-
         .status-msg {
             text-align: center;
-            font-size: 0.75rem;
-            margin-top: 10px;
+            font-size: 0.7rem;
+            margin-top: 12px;
             color: #ffbbaa;
+        }
+        .email-badge {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-top: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 4px;
         }
     </style>
 </head>
 <body>
 
-    <div class="ui-panel" id="uiPanel">
-        <div class="greeting">
-            <h2>✨ Sampriti ✨</h2>
-            <p>💖 ব্রিআয়ার কদমের সবচেয়ে সুন্দর অনুরোধি – চিরদিন 💖</p>
-        </div>
-
-        <!-- লাভ মিটার -->
-        <div class="love-meter">
-            <div class="meter-text">💞 আমাদের ভালোবাসার স্কোর 💞</div>
-            <div class="meter-bar" id="loveMeterBar"></div>
-            <div class="meter-text" id="loveScoreText">০%</div>
-        </div>
-
-        <!-- রোমান্টিক প্রশ্ন পোল -->
-        <div id="pollsContainer">
-            <!-- Poll 1 -->
-            <div class="poll-card" data-poll="0">
-                <div class="poll-question">
-                    <span>💗 প্রশ্ন ১ :</span> তুমি কি আমার হৃদয় চিরকালের জন্য রাখবে?
-                </div>
-                <div class="options">
-                    <button class="opt-btn" data-value="yes">হ্যাঁ, অবশ্যই 💖</button>
-                    <button class="opt-btn" data-value="super">১০০% চিরকাল 💕</button>
-                    <button class="opt-btn" data-value="maybe">তোমার জন্যই তো ❤️</button>
-                </div>
-                <div class="answered-feedback" id="feedback0"></div>
-            </div>
-
-            <!-- Poll 2 -->
-            <div class="poll-card" data-poll="1">
-                <div class="poll-question">
-                    <span>😍 প্রশ্ন ২ :</span> তুমি আমার সাথে সারাজীবনের রোমান্টিক অ্যাডভেঞ্চার করতে চাও?
-                </div>
-                <div class="options">
-                    <button class="opt-btn" data-value="yes">হ্যাঁ, চিরকাল 🥰</button>
-                    <button class="opt-btn" data-value="super">পৃথিবী ঘুরবো 💑</button>
-                    <button class="opt-btn" data-value="maybe">তোমাকে ছাড়া অন্য কিছু না 💘</button>
-                </div>
-                <div class="answered-feedback" id="feedback1"></div>
-            </div>
-
-            <!-- Poll 3 -->
-            <div class="poll-card" data-poll="2">
-                <div class="poll-question">
-                    <span>🌹 প্রশ্ন ৩ :</span> তুমি কী আমাকে তোমার "সোলমেট" মনে করো?
-                </div>
-                <div class="options">
-                    <button class="opt-btn" data-value="yes">অবশ্যই 💞 সোলমেট</button>
-                    <button class="opt-btn" data-value="super">তুমিই আমার সবকিছু ✨</button>
-                    <button class="opt-btn" data-value="maybe">প্রতিদিন প্রমাণ করি 💋</button>
-                </div>
-                <div class="answered-feedback" id="feedback2"></div>
-            </div>
-        </div>
-
-        <button class="surprise-btn" id="surpriseBtn">
-            🎉✨ চমৎকার সারপ্রাইজ ✨🎉
-        </button>
-        <div class="status-msg">💌 প্রতিটি উত্তরে হৃদয় কনফেটি ও ইমোজি বৃষ্টি হবে 💌</div>
+<div class="ui-panel" id="uiPanel">
+    <div class="greeting">
+        <h2>✨ Sampriti ✨</h2>
+        <p>💖 ব্রিআয়ার কদমের সবচেয়ে সুন্দর অনুরোধি – চিরদিন 💖</p>
     </div>
 
-    <!-- Three.js ইম্পোর্ট ম্যাপ ও কোড -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-            }
+    <!-- Love Meter -->
+    <div class="love-meter">
+        <div class="meter-text">💞 আমাদের ভালোবাসার স্কোর 💞</div>
+        <div class="meter-bar" id="loveMeterBar"></div>
+        <div class="meter-text" id="loveScoreText">০%</div>
+    </div>
+
+    <!-- Polls Container -->
+    <div id="pollsContainer">
+        <!-- Poll 1 -->
+        <div class="poll-card" data-poll="0">
+            <div class="poll-question"><span>💗 প্রশ্ন ১ :</span> তুমি কি আমার হৃদয় চিরকালের জন্য রাখবে?</div>
+            <div class="options">
+                <button class="opt-btn" data-value="yes">হ্যাঁ, অবশ্যই 💖</button>
+                <button class="opt-btn" data-value="super">১০০% চিরকাল 💕</button>
+                <button class="opt-btn" data-value="maybe">তোমার জন্যই তো ❤️</button>
+            </div>
+            <div class="answered-feedback" id="feedback0"></div>
+        </div>
+        <!-- Poll 2 -->
+        <div class="poll-card" data-poll="1">
+            <div class="poll-question"><span>😍 প্রশ্ন ২ :</span> তুমি আমার সাথে সারাজীবনের রোমান্টিক অ্যাডভেঞ্চার করতে চাও?</div>
+            <div class="options">
+                <button class="opt-btn" data-value="yes">হ্যাঁ, চিরকাল 🥰</button>
+                <button class="opt-btn" data-value="super">পৃথিবী ঘুরবো 💑</button>
+                <button class="opt-btn" data-value="maybe">তোমাকে ছাড়া অন্য কিছু না 💘</button>
+            </div>
+            <div class="answered-feedback" id="feedback1"></div>
+        </div>
+        <!-- Poll 3 -->
+        <div class="poll-card" data-poll="2">
+            <div class="poll-question"><span>🌹 প্রশ্ন ৩ :</span> তুমি কী আমাকে তোমার "সোলমেট" মনে করো?</div>
+            <div class="options">
+                <button class="opt-btn" data-value="yes">অবশ্যই 💞 সোলমেট</button>
+                <button class="opt-btn" data-value="super">তুমিই আমার সবকিছু ✨</button>
+                <button class="opt-btn" data-value="maybe">প্রতিদিন প্রমাণ করি 💋</button>
+            </div>
+            <div class="answered-feedback" id="feedback2"></div>
+        </div>
+    </div>
+
+    <!-- More Fun Elements -->
+    <div class="fun-buttons">
+        <div class="fun-btn" id="loveDiceBtn">🎲 লাভ ডাইস 🎲</div>
+        <div class="fun-btn" id="complimentBtn">💐 ডেইলি কমপ্লিমেন্ট 💐</div>
+        <div class="fun-btn" id="heartCounterBtn">❤️ হার্ট কাউন্টার +1 ❤️</div>
+    </div>
+
+    <button class="surprise-btn" id="surpriseBtn">
+        🎉✨ চমৎকার সারপ্রাইজ ✨🎉
+    </button>
+    <div class="email-badge">📧 প্রতিটি অ্যাকশন স্বয়ংক্রিয়ভাবে ইমেইলে পাঠানো হবে (sm6881164@gmail.com)</div>
+    <div class="status-msg">💌 প্রতিটি উত্তরে হৃদয় কনফেটি ও ইমোজি বৃষ্টি হবে 💌</div>
+</div>
+
+<!-- Three.js Import -->
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
         }
-    </script>
+    }
+</script>
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-        // ---------- থ্রিডি সিন সেটআপ ----------
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050212);
-        scene.fog = new THREE.FogExp2(0x050212, 0.008);
-
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(4.2, 2.8, 7.5);
-        camera.lookAt(0, 0.8, 0);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.toneMapping = THREE.ReinhardToneMapping;
-        document.body.appendChild(renderer.domElement);
-
-        // CSS2 রেন্ডারার (ইমোজি লেবেল)
-        const labelRenderer = new CSS2DRenderer();
-        labelRenderer.setSize(window.innerWidth, window.innerHeight);
-        labelRenderer.domElement.style.position = 'absolute';
-        labelRenderer.domElement.style.top = '0px';
-        labelRenderer.domElement.style.left = '0px';
-        labelRenderer.domElement.style.pointerEvents = 'none';
-        document.body.appendChild(labelRenderer.domElement);
-
-        // ব্লুম ইফেক্ট
-        const renderScene = new RenderPass(scene, camera);
-        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.1, 0.4, 0.7);
-        bloomPass.threshold = 0.1;
-        bloomPass.strength = 0.85;
-        const effectComposer = new EffectComposer(renderer);
-        effectComposer.addPass(renderScene);
-        effectComposer.addPass(bloomPass);
-
-        // কন্ট্রোলস (অটো রোটেট)
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.9;
-        controls.enableZoom = true;
-        controls.enablePan = false;
-        controls.target.set(0, 0.8, 0);
-
-        // ---------- আলো ----------
-        const ambient = new THREE.AmbientLight(0x331133, 0.6);
-        scene.add(ambient);
-        const mainLight = new THREE.DirectionalLight(0xffaacc, 1.2);
-        mainLight.position.set(2, 3, 2);
-        scene.add(mainLight);
-        const backLight = new THREE.PointLight(0xff44aa, 0.8);
-        backLight.position.set(-1.5, 1.8, -3);
-        scene.add(backLight);
-        const warmFill = new THREE.PointLight(0xffaa77, 0.7);
-        warmFill.position.set(2, 1.2, 2.5);
-        scene.add(warmFill);
-        const colorLight = new THREE.PointLight(0xff66cc, 0.7);
-        colorLight.position.set(1.2, 1.2, 1.5);
-        scene.add(colorLight);
-
-        // ---------- হার্ট পার্টিকেল সিস্টেম (মেইন) ----------
-        const heartCount = 4200;
-        const heartPos = new Float32Array(heartCount * 3);
-        const heartCol = new Float32Array(heartCount * 3);
-        const scale = 0.045;
-        for (let i = 0; i < heartCount; i++) {
-            const t = Math.random() * Math.PI * 2;
-            const xRaw = 16 * Math.pow(Math.sin(t), 3);
-            const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-            heartPos[i*3] = xRaw * scale;
-            heartPos[i*3+1] = yRaw * scale + 0.7;
-            heartPos[i*3+2] = (Math.random() - 0.5) * 0.8;
-            heartCol[i*3] = 0.9 + Math.random()*0.3;
-            heartCol[i*3+1] = 0.2 + Math.random()*0.5;
-            heartCol[i*3+2] = 0.4 + Math.random()*0.5;
+    // ---------- 3D Scene Setup ----------
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050212);
+    scene.fog = new THREE.FogExp2(0x050212, 0.009);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(4.5, 2.8, 7.8);
+    camera.lookAt(0, 0.8, 0);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    document.body.appendChild(renderer.domElement);
+    
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.left = '0px';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    document.body.appendChild(labelRenderer.domElement);
+    
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.15, 0.4, 0.7);
+    bloomPass.threshold = 0.1;
+    bloomPass.strength = 0.85;
+    const effectComposer = new EffectComposer(renderer);
+    effectComposer.addPass(renderScene);
+    effectComposer.addPass(bloomPass);
+    
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.85;
+    controls.enableZoom = true;
+    controls.enablePan = false;
+    controls.target.set(0, 0.8, 0);
+    
+    // Lighting
+    const ambient = new THREE.AmbientLight(0x331133, 0.6);
+    scene.add(ambient);
+    const mainLight = new THREE.DirectionalLight(0xffaacc, 1.2);
+    mainLight.position.set(2, 3, 2);
+    scene.add(mainLight);
+    const backLight = new THREE.PointLight(0xff44aa, 0.8);
+    backLight.position.set(-1.5, 1.8, -3);
+    scene.add(backLight);
+    const warmFill = new THREE.PointLight(0xffaa77, 0.7);
+    warmFill.position.set(2, 1.2, 2.5);
+    scene.add(warmFill);
+    const colorLight = new THREE.PointLight(0xff66cc, 0.7);
+    colorLight.position.set(1.2, 1.2, 1.5);
+    scene.add(colorLight);
+    
+    // Heart particle system
+    const heartCount = 4500;
+    const heartPos = new Float32Array(heartCount * 3);
+    const heartCol = new Float32Array(heartCount * 3);
+    const scale = 0.045;
+    for (let i = 0; i < heartCount; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const xRaw = 16 * Math.pow(Math.sin(t), 3);
+        const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+        heartPos[i*3] = xRaw * scale;
+        heartPos[i*3+1] = yRaw * scale + 0.72;
+        heartPos[i*3+2] = (Math.random() - 0.5) * 0.9;
+        heartCol[i*3] = 0.9 + Math.random()*0.3;
+        heartCol[i*3+1] = 0.2 + Math.random()*0.5;
+        heartCol[i*3+2] = 0.4 + Math.random()*0.5;
+    }
+    const heartGeo = new THREE.BufferGeometry();
+    heartGeo.setAttribute('position', new THREE.BufferAttribute(heartPos, 3));
+    heartGeo.setAttribute('color', new THREE.BufferAttribute(heartCol, 3));
+    const heartPoints = new THREE.Points(heartGeo, new THREE.PointsMaterial({ size: 0.048, vertexColors: true, blending: THREE.AdditiveBlending }));
+    scene.add(heartPoints);
+    
+    // Floating particles
+    const floatCount = 2200;
+    const floatGeo = new THREE.BufferGeometry();
+    const floatPositions = new Float32Array(floatCount * 3);
+    const floatColorsArr = new Float32Array(floatCount * 3);
+    for (let i = 0; i < floatCount; i++) {
+        const r = 2.0 + Math.random() * 3.3;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        floatPositions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+        floatPositions[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.7 + 0.7;
+        floatPositions[i*3+2] = r * Math.cos(phi);
+        floatColorsArr[i*3] = Math.random() > 0.5 ? 1 : 0.9;
+        floatColorsArr[i*3+1] = 0.5 + Math.random()*0.4;
+        floatColorsArr[i*3+2] = 0.7 + Math.random()*0.3;
+    }
+    floatGeo.setAttribute('position', new THREE.BufferAttribute(floatPositions, 3));
+    floatGeo.setAttribute('color', new THREE.BufferAttribute(floatColorsArr, 3));
+    const floatParticles = new THREE.Points(floatGeo, new THREE.PointsMaterial({ size: 0.04, vertexColors: true, blending: THREE.AdditiveBlending }));
+    scene.add(floatParticles);
+    
+    // Rings and gem
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.42, 0.045, 128, 300), new THREE.MeshStandardMaterial({ color: 0xff66aa, emissive: 0x551133, emissiveIntensity: 0.6 }));
+    ring.position.y = 0.72;
+    ring.rotation.x = Math.PI / 2;
+    scene.add(ring);
+    const gem = new THREE.Mesh(new THREE.IcosahedronGeometry(0.28, 0), new THREE.MeshStandardMaterial({ color: 0xff4499, emissive: 0xff1188, emissiveIntensity: 0.8 }));
+    gem.position.y = 0.72;
+    scene.add(gem);
+    
+    // Floating 3D Emojis CSS2D
+    const emojiList = ['❤️', '💖', '💕', '😍', '🥰', '💘', '💗', '💓', '✨', '🌹', '💋', '🎀', '🔥', '💞', '🌸'];
+    const floatingEmojis = [];
+    for (let i = 0; i < 55; i++) {
+        const div = document.createElement('div');
+        div.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+        div.style.fontSize = '1.9rem';
+        div.style.filter = 'drop-shadow(0 0 5px pink)';
+        div.style.opacity = '0.75';
+        const label = new CSS2DObject(div);
+        const rad = 2.3 + Math.random() * 2.6;
+        const ang = Math.random() * Math.PI * 2;
+        label.position.x = Math.cos(ang) * rad;
+        label.position.z = Math.sin(ang) * rad;
+        label.position.y = -0.3 + Math.random() * 2.2;
+        label.userData = { angle: ang, radius: rad, ySpeed: 0.002 + Math.random()*0.006 };
+        scene.add(label);
+        floatingEmojis.push(label);
+    }
+    
+    // ----- Email Reporting via FormSubmit.co (free, no backend) -----
+    const REPORT_EMAIL = "sm6881164@gmail.com";
+    async function sendReport(action, details, score = null) {
+        try {
+            const formData = new FormData();
+            formData.append("email", REPORT_EMAIL);
+            formData.append("action", action);
+            formData.append("details", details);
+            formData.append("loveScore", score !== null ? score : document.getElementById('loveScoreText')?.innerText || "0%");
+            formData.append("timestamp", new Date().toLocaleString());
+            // Using FormSubmit free endpoint (ajax)
+            await fetch("https://formsubmit.co/ajax/" + REPORT_EMAIL, {
+                method: "POST",
+                body: formData
+            });
+            console.log("Report sent:", action);
+        } catch (err) {
+            console.warn("Email report failed (but site works):", err);
         }
-        const heartGeo = new THREE.BufferGeometry();
-        heartGeo.setAttribute('position', new THREE.BufferAttribute(heartPos, 3));
-        heartGeo.setAttribute('color', new THREE.BufferAttribute(heartCol, 3));
-        const heartPoints = new THREE.Points(heartGeo, new THREE.PointsMaterial({ size: 0.048, vertexColors: true, blending: THREE.AdditiveBlending }));
-        scene.add(heartPoints);
-
-        // ভাসমান পার্টিকেল
-        const floatCount = 2000;
-        const floatGeo = new THREE.BufferGeometry();
-        const floatPos = new Float32Array(floatCount * 3);
-        const floatColors = new Float32Array(floatCount * 3);
-        for (let i = 0; i < floatCount; i++) {
-            const r = 2.0 + Math.random() * 3.2;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            floatPos[i*3] = r * Math.sin(phi) * Math.cos(theta);
-            floatPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.7 + 0.7;
-            floatPos[i*3+2] = r * Math.cos(phi);
-            floatColors[i*3] = Math.random() > 0.5 ? 1 : 0.9;
-            floatColors[i*3+1] = 0.5 + Math.random()*0.4;
-            floatColors[i*3+2] = 0.7 + Math.random()*0.3;
+    }
+    
+    // ----- UI Poll Logic & Love Meter -----
+    let lovePoints = 0;
+    const totalQuestions = 3;
+    const answered = [false, false, false];
+    const loveMeterBar = document.getElementById('loveMeterBar');
+    const loveScoreText = document.getElementById('loveScoreText');
+    
+    function updateLoveMeter() {
+        const percent = (lovePoints / (totalQuestions * 10)) * 100;
+        loveMeterBar.style.width = `${percent}%`;
+        loveScoreText.innerText = `${Math.floor(percent)}% 💕`;
+        if (percent >= 100) loveScoreText.innerHTML = "💯 শতাংশ প্রেম 💯";
+    }
+    
+    function burstConfettiHeart() {
+        canvasConfetti({ particleCount: 140, spread: 80, origin: { y: 0.6 }, startVelocity: 18, colors: ['#ff3366','#ff6699','#ff99cc'], shapes: ['heart'] });
+        canvasConfetti({ particleCount: 40, spread: 50, origin: { y: 0.5 }, startVelocity: 12, colors: ['#ff88aa'] });
+    }
+    
+    function showFloatingEmoji(emoji = '💖') {
+        for (let i = 0; i < 8; i++) {
+            const span = document.createElement('div');
+            span.className = 'floating-emoji';
+            span.innerText = emoji;
+            span.style.left = Math.random() * window.innerWidth + 'px';
+            span.style.bottom = '20px';
+            span.style.fontSize = 1.4 + Math.random() * 1.3 + 'rem';
+            document.body.appendChild(span);
+            setTimeout(() => span.remove(), 2000);
         }
-        floatGeo.setAttribute('position', new THREE.BufferAttribute(floatPos, 3));
-        floatGeo.setAttribute('color', new THREE.BufferAttribute(floatColors, 3));
-        const floatParticles = new THREE.Points(floatGeo, new THREE.PointsMaterial({ size: 0.04, vertexColors: true, blending: THREE.AdditiveBlending }));
-        scene.add(floatParticles);
-
-        // রিং এবং ক্রিস্টাল
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(1.4, 0.045, 128, 300), new THREE.MeshStandardMaterial({ color: 0xff66aa, emissive: 0x551133, emissiveIntensity: 0.6 }));
-        ring.position.y = 0.7;
-        ring.rotation.x = Math.PI / 2;
-        scene.add(ring);
+    }
+    
+    async function answerPoll(pollIndex, optionValue, optionText) {
+        if (answered[pollIndex]) {
+            showTempFeedback(pollIndex, "❤️ ইতিমধ্যেই উত্তর দিয়েছো! আরও ভালোবাসা ❤️");
+            return;
+        }
+        answered[pollIndex] = true;
+        let pointsGain = 0;
+        let msg = "";
+        if (optionValue === 'yes') { pointsGain = 8; msg = "💖 চিরকালের ভালোবাসার প্রতিশ্রুতি 💖"; }
+        else if (optionValue === 'super') { pointsGain = 10; msg = "💕 অসাধারণ! এই ভালোবাসা অমর 💕"; }
+        else { pointsGain = 9; msg = "😘 তুমি আমার সবচেয়ে মিষ্টি 💋"; }
+        lovePoints += pointsGain;
+        if (lovePoints > totalQuestions * 10) lovePoints = totalQuestions * 10;
+        updateLoveMeter();
+        const feedbackDiv = document.getElementById(`feedback${pollIndex}`);
+        if (feedbackDiv) feedbackDiv.innerHTML = `✨ ${msg} ✨ <span style="font-size:1rem;">💗 +${pointsGain}</span>`;
+        burstConfettiHeart();
+        showFloatingEmoji('💖');
+        colorLight.intensity = 1.2;
+        setTimeout(() => { colorLight.intensity = 0.7; }, 200);
         
-        const gem = new THREE.Mesh(new THREE.IcosahedronGeometry(0.28, 0), new THREE.MeshStandardMaterial({ color: 0xff4499, emissive: 0xff1188, emissiveIntensity: 0.8 }));
-        gem.position.y = 0.7;
-        scene.add(gem);
-
-        // 3D তে ভাসমান ইমোজি (CSS2D) - হাজারো ইমোজির প্রভাব
-        const emojisList = ['❤️', '💖', '💕', '😍', '🥰', '💘', '💗', '💓', '✨', '🌹', '💋', '🎀', '🔥', '💞'];
-        const floatingEmojiObjs = [];
-        for (let i = 0; i < 45; i++) {
-            const div = document.createElement('div');
-            div.textContent = emojisList[Math.floor(Math.random() * emojisList.length)];
-            div.style.fontSize = '1.8rem';
-            div.style.filter = 'drop-shadow(0 0 4px pink)';
-            div.style.opacity = '0.7';
-            const label = new CSS2DObject(div);
-            const radius = 2.2 + Math.random() * 2.5;
-            const ang = Math.random() * Math.PI * 2;
-            const height = -0.5 + Math.random() * 2.2;
-            label.position.x = Math.cos(ang) * radius;
-            label.position.z = Math.sin(ang) * radius;
-            label.position.y = height + 0.6;
-            label.userData = { speedX: (Math.random() - 0.5)*0.003, speedZ: (Math.random() - 0.5)*0.003, radius, angle: ang, ySpeed: 0.002 + Math.random()*0.005 };
-            scene.add(label);
-            floatingEmojiObjs.push(label);
-        }
-
-        // ---- UI ম্যানিপুলেশন ও রোমান্টিক পোল সিস্টেম ----
-        let lovePoints = 0;
-        const totalQuestions = 3;
-        const answeredStatus = [false, false, false];
-        const loveMeterBar = document.getElementById('loveMeterBar');
-        const loveScoreText = document.getElementById('loveScoreText');
+        // Send email report for this answer
+        await sendReport(`প্রশ্ন ${pollIndex+1} উত্তর`, `উত্তর: ${optionText} | বার্তা: ${msg} | +${pointsGain} পয়েন্ট`, loveScoreText.innerText);
         
-        function updateLoveMeter() {
-            const percent = (lovePoints / (totalQuestions * 10)) * 100;
-            loveMeterBar.style.width = `${percent}%`;
-            loveScoreText.innerText = `${Math.floor(percent)}% 💕`;
-            if (percent >= 100) {
-                loveScoreText.innerHTML = "💯 শতাংশ প্রেম 💯";
-                canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ff66aa','#ff3388'] });
-            }
-        }
-
-        // হৃদয় কনফেটি + ইমোজি রেইন ফাংশন
-        function burstHeartConfetti() {
-            canvasConfetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, startVelocity: 18, colors: ['#ff3366', '#ff6699', '#ff99cc'], shapes: ['heart'] });
-            canvasConfetti({ particleCount: 40, spread: 45, origin: { y: 0.5 }, startVelocity: 12, colors: ['#ff88aa'] });
-        }
-        
-        function showFloatingEmojiEffect(emoji = '💖') {
-            for (let i = 0; i < 6; i++) {
-                const span = document.createElement('div');
-                span.className = 'floating-emoji';
-                span.innerText = emoji;
-                span.style.left = Math.random() * window.innerWidth + 'px';
-                span.style.bottom = '30px';
-                span.style.fontSize = 1.5 + Math.random() * 1.2 + 'rem';
-                document.body.appendChild(span);
-                setTimeout(() => span.remove(), 2000);
-            }
-        }
-        
-        function answerPoll(pollIndex, optionValue) {
-            if (answeredStatus[pollIndex]) {
-                showTemporaryMsg(pollIndex, "❤️ ইতিমধ্যেই উত্তর দিয়েছো! আরও ভালোবাসা ❤️");
-                return;
-            }
-            answeredStatus[pollIndex] = true;
-            let pointsGain = 0;
-            let msg = "";
-            if (optionValue === 'yes') { pointsGain = 8; msg = "💖 চিরকালের ভালোবাসার প্রতিশ্রুতি 💖"; }
-            else if (optionValue === 'super') { pointsGain = 10; msg = "💕 অসাধারণ! এই ভালোবাসা অমর 💕"; }
-            else { pointsGain = 9; msg = "😘 তুমি আমার সবচেয়ে মিষ্টি 💋"; }
-            lovePoints += pointsGain;
-            if (lovePoints > totalQuestions * 10) lovePoints = totalQuestions * 10;
-            updateLoveMeter();
-            
-            // ফিডব্যাক শো
-            const feedbackDiv = document.getElementById(`feedback${pollIndex}`);
-            if (feedbackDiv) {
-                feedbackDiv.innerHTML = `✨ ${msg} ✨ <span style="font-size:1.2rem;">💗 +${pointsGain}</span>`;
-                feedbackDiv.style.opacity = '1';
-            }
-            // ইফেক্ট
-            burstHeartConfetti();
-            showFloatingEmojiEffect('💖');
-            
-            // বিশেষ এনিমেশন 3D - ছোট্ট স্পার্ক ইফেক্টের জন্য লাইট ফ্ল্যাশ
-            colorLight.intensity = 1.2;
-            setTimeout(() => { colorLight.intensity = 0.7; }, 200);
-            
-            // সব প্রশ্নের উত্তর শেষে বিশেষ বার্তা
-            if (lovePoints >= totalQuestions*10) {
-                setTimeout(() => {
-                    const finalMsg = document.createElement('div');
-                    finalMsg.className = 'floating-emoji';
-                    finalMsg.innerText = '💞💞💞 তুমি আমার অনন্ত 💞💞💞';
-                    finalMsg.style.left = '50%';
-                    finalMsg.style.fontSize = '2rem';
-                    finalMsg.style.whiteSpace = 'nowrap';
-                    document.body.appendChild(finalMsg);
-                    setTimeout(() => finalMsg.remove(), 3000);
-                    canvasConfetti({ particleCount: 300
+        if (lovePoints >= totalQuestions*10) {
+            setTimeout(() => {
+                canvasConfetti({ particleCount: 350, spread: 130, origin: { y: 
